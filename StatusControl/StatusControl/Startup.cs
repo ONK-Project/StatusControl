@@ -46,6 +46,8 @@ namespace StatusControl
             services.AddSingleton<IStatusControlDBSettings>(sp =>
                 sp.GetRequiredService<IOptions<StatusControlDBSettings>>().Value);
 
+            services.AddSingleton<IStatusConsumptionService, StatusConsumptionService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Status Control", Version = "v1" });
@@ -101,7 +103,7 @@ namespace StatusControl
             SubscribeRequest subscribeRequest = new SubscribeRequest()
             {
                 Channel = ChannelName,
-                ClientID = ClientID + new Random().Next().ToString(),
+                ClientID = ClientID,
                 EventsStoreType = EventsStoreType.StartAtSequence,
                 EventsStoreTypeValue = 1,
                 SubscribeType = SubscribeType.EventsStore
