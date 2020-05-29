@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statuscontrol
+  namespace: "proj-gr4"
+  labels:
+    app: statuscontrol
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: statuscontrol
+  template:
+    metadata:
+      labels:
+        app: statuscontrol
+    spec:
+      containers:
+      - name: statuscontrol
+        image: mortenlyngosenquist/statuscontrol:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: statuscontrol
+  namespace: "proj-gr4"
+spec:
+  selector:
+    app: statuscontrol
+  ports:
+    - port: 8080
+      targetPort: 80
+  type: LoadBalancer
+    
+      
+      
